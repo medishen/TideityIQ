@@ -1,7 +1,6 @@
 Flow Chart
 
 ```mermaid
-graph TD;
-    Start --> Fun1;
-    Fun1 --> End;
+flowchart TD;
+    A@{ shape: circle, label: "Start" } --> B@{ shape: circle, label: "End" }
 ```
