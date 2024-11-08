@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "../include/utils.h"
-
 char *get_lang(char *filename){
     char *extension = strrchr(filename, '.');
     if (!extension) {
