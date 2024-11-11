@@ -7,7 +7,7 @@
 #include "../include/calc_complexity.h"
 int main(int argc, char *argv[]) {
     char *language = NULL;
-    if ((strcmp(argv[0], "tdq") == 0)) {
+     if (argc == 1 && (strcmp(argv[0], "tdq") == 0)) {
         system("bash ./bin/tdq");
         return 0;
     }
