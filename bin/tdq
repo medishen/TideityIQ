@@ -1,0 +1,97 @@
+#!/bin/bash
+MAKE_FILE="../Makefile"
+EXEC="tdq"
+function type_effect() {
+    local text="$1"
+    local delay=0.05  
+
+    for (( i=0; i<${#text}; i++ )); do
+        echo -n "${text:$i:1}"
+        sleep $delay
+    done
+    echo ""
+}
+function display_intro() {
+        echo -e "\033[1;32m"
+        type_effect "============================="
+        type_effect "|                           |"
+        type_effect "| ~ Welcome to TideityIQ! ~ |"
+        type_effect "|                           |"
+        type_effect "============================="
+        type_effect "Initiating... Please wait while we get your code together."
+        sleep 1 
+        
+        echo -e "\033[1;33m"
+        cat << 'EOF'
+         ._                __.
+        / \"-.          ,-",'/ 
+       (   \ ,"--.__.--".,' /  
+       =---Y(_i.-'  |-.i_)---=
+      f ,  "..'/\\v/|/|/\  , l
+      l//  ,'|/   V / /||  \\j
+       "--; / db     db|/---"
+          | \ YY   , YY//
+          '.\>_   (_),"' __
+        .-"    "-.-." I,"  `.
+        \.-""-. ( , ) ( \   |
+        (     l  `"'  -'-._j 
+ __,---_ '._." .  .    \
+(__.--_-'.  ,  :  '  \  '-.
+    ,' .'  /   |   \  \  \ "-
+     "--.._____t____.--'-""'
+            /  /  `. ".
+           / ":     \' '.
+         .'  (       \   : 
+         |    l      j    "-.
+         l_;_;I      l____;_I
+EOF
+        echo -e "\033[0m"
+
+        sleep 1
+        echo -e "\033[1;31m" 
+        type_effect "Welcome to TideityIQ (tdq), where your code meets its reckoning!"
+        type_effect "TideityIQ will analyze your JavaScript functions, one at a time, to determine their time complexity."
+        sleep 0.5
+        echo -e "\033[0m" 
+
+        echo -e "\033[1;32m"
+        type_effect "TideityIQ is here to help you analyze your recursive code... because we know you can't."
+        type_effect "It’s about time you let a tool handle the tough stuff."
+        sleep 0.5
+        echo -e "\033[1;32m"
+
+        type_effect "So sit back, relax, and let tdq tear apart your code and give you the insights you need."
+        type_effect "Maybe, just maybe, you'll finally understand what's going on under the hood."
+        echo -e "\033[0m"
+        echo
+}
+# Function to check if tdq binary exists, compile if necessary
+function check_and_compile() {
+    if ! [ -f "$EXEC" ]; then
+        echo "Binary $EXEC not found. Compiling..."
+        make -f "$MAKE_FILE"
+        if [ $? -ne 0 ]; then
+            echo "Failed to compile the code. Exiting."
+            exit 1
+        fi
+    fi
+}
+# Function to handle the start logic
+function start() {
+    # Check if we are running "tdq" or "TideityIQ" without a file argument
+    if [ "$#" -eq 0 ] || [[ "$1" == "tdq" ]] || [[ "$1" == "TideityIQ" ]] || [[ "$1" == "tideityiq" ]]; then
+        display_intro
+    elif [[ "$1" == "tdq" && -f "$2" ]]; then
+        # If the user provides a file (e.g., tdq ./hello.js)
+        check_and_compile
+        echo "Analyzing file: $2"
+        # Your function to analyze the JS file goes here
+        # For example, you can call:
+        ./tdq "$2"  # Assuming your `tdq` executable takes the file as argument
+    else
+        echo "Invalid command or file. Usage: tdq [filename.js] or just tdq for the introduction."
+    fi
+}
+
+# Start function call
+start "$@"

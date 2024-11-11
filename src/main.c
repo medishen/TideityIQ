@@ -1,15 +1,24 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/utils.h"
-#include "../include/parser.h"
+#include "../include/file_reader.h"
+#include "../include/analyze.h"
+#include "../include/calc_complexity.h"
 int main(int argc, char *argv[]) {
     char *language = NULL;
+
+    // Ensure that the user provides a file argument
     if (argc < 2) {
-        printf("Usage: %s code_file\n", argv[0]);
+        printf("Usage: tdq <code_file>\n");
         return 1;
     }
     language = get_lang(argv[1]);
-    char *file_content = read_file(argv[1]);
-    printf("File Content:\n%s\n", file_content);
+    if (strcmp(language, "unknown") == 0) {
+        printf("Unsupported file type.\n");
+        return 1;
+    }
+    AnalysisData data = {0};
+    read_file(argv[1], language, &data);
+    calculate_complexity(&data);
     return 0;
 }
