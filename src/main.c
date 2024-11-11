@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "../include/utils.h"
 #include "../include/file_reader.h"
 #include "../include/analyze.h"
 #include "../include/calc_complexity.h"
 int main(int argc, char *argv[]) {
     char *language = NULL;
-
+    if ((strcmp(argv[0], "tdq") == 0)) {
+        system("bash ./bin/tdq");
+        return 0;
+    }
     // Ensure that the user provides a file argument
     if (argc < 2) {
         printf("Usage: tdq <code_file>\n");
