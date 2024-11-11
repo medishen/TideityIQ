@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  tdq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tdq
+    command: ["tdq"]
+    tty: true
+    stdin_open: true
+    environment:
+      - LICENSE=MIT
