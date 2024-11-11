@@ -44,10 +44,6 @@ void calculate_complexity(const AnalysisData *data) {
     // Handle recursion complexity analysis
     if (data->recursive_calls > 0) {
         printf("Detected recursive function calls.\n");
-        // Handle linear recursion (e.g., recursion on a single branch with reduced input)
-        printf("nested_depth: %d\n",data->nested_depth);
-        printf("Recursive Calls: %d\n", data->recursive_calls);
-        printf("Logarithmic Loops: %d\n", data->logarithmic_loops);
         // Logarithmic Recursion: Single recursive call with logarithmic reduction
        if (data->recursive_calls == 1 && data->logarithmic_loops > 0) {
             print_output(

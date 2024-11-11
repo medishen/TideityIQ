@@ -84,9 +84,6 @@ tdq hello.js
 ```text
 Complexity Analysis:
 Detected recursive function calls.
-nested_depth: 0
-Recursive Calls: 2
-Logarithmic Loops: 0
 Big O Complexity: O(2^n)
 Theta Complexity: Θ(2^n)
 Omega Complexity: Ω(1)
@@ -124,9 +121,6 @@ Running `tdq hello.js` will analyze the recursion and print:
 ```text
 Complexity Analysis:
 Detected recursive function calls.
-nested_depth: 0
-Recursive Calls: 2
-Logarithmic Loops: 0
 Big O Complexity: O(2^n)
 Theta Complexity: Θ(2^n)
 Omega Complexity: Ω(1)
