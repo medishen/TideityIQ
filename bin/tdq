@@ -1,6 +1,4 @@
 #!/bin/bash
-MAKE_FILE="../Makefile"
-EXEC="tdq"
 function type_effect() {
     local text="$1"
     local delay=0.05  
@@ -65,33 +63,16 @@ EOF
         echo -e "\033[0m"
         echo
 }
-# Function to check if tdq binary exists, compile if necessary
-function check_and_compile() {
-    if ! [ -f "$EXEC" ]; then
-        echo "Binary $EXEC not found. Compiling..."
-        make -f "$MAKE_FILE"
-        if [ $? -ne 0 ]; then
-            echo "Failed to compile the code. Exiting."
-            exit 1
-        fi
-    fi
-}
-# Function to handle the start logic
+MAKE_FILE="Makefile"
+EXEC="tdq"
+INSTALL_DIR="/usr/local/bin"
 function start() {
-    # Check if we are running "tdq" or "TideityIQ" without a file argument
-    if [ "$#" -eq 0 ] || [[ "$1" == "tdq" ]] || [[ "$1" == "TideityIQ" ]] || [[ "$1" == "tideityiq" ]]; then
+     if [ "$#" -eq 0 ] || [[ "$1" == "tdq" ]]; then
         display_intro
-    elif [[ "$1" == "tdq" && -f "$2" ]]; then
-        # If the user provides a file (e.g., tdq ./hello.js)
-        check_and_compile
-        echo "Analyzing file: $2"
-        # Your function to analyze the JS file goes here
-        # For example, you can call:
-        ./tdq "$2"  # Assuming your `tdq` executable takes the file as argument
+        return
     else
-        echo "Invalid command or file. Usage: tdq [filename.js] or just tdq for the introduction."
+        echo "Analyzing file: $1"
+        ./tdq "$1"
     fi
 }
-
-# Start function call
 start "$@"
