@@ -17,7 +17,7 @@ Currently, TideityIQ supports Python, JavaScript, and C. Future versions may inc
 To analyze a code snippet, you can use the command line with the following syntax:
 
 ```bash
-tideityiq analyze "<code_snippet>"
+tdq analyze "<code_snippet>"
 ```
 
 Replace `<code_snippet>` with your actual code. For more examples, please refer to the [Usage](README.md#usage) section of the README.
