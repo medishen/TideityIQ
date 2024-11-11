@@ -1,171 +1,95 @@
-# Software Requirements Specification (SRS) for TideityIQ
+## Software Requirements Specification (SRS) for TideityIQ
 
-## 1. Introduction
+### 1. Introduction
 
-### 1.1 Purpose
+#### 1.1 Purpose
 
-The purpose of the **TideityIQ** project is to develop a command-line interface (CLI) tool that analyzes algorithmic complexity of code snippets provided by users in multiple programming languages (initially JavaScript, Python, and C). The tool will compute and display the complexity in Big O, Theta, and Omega notations, helping users understand the performance characteristics of their algorithms.
+The purpose of **TideityIQ** (tdq) is to analyze JavaScript functions, specifically recursive functions, and determine their time complexity based on various characteristics like recursion depth, loop types, and overall complexity. This tool helps developers understand the performance of their code by analyzing recursion, loops, and other structural components.
 
-### 1.2 Scope
+#### 1.2 Scope
 
-The scope of the TideityIQ project includes:
+TideityIQ analyzes JavaScript files (`.js`) to detect recursive function calls and estimate time complexities (Big O, Theta, and Omega notations). It supports detailed reporting and provides an interactive terminal-based user experience.
 
-- Parsing code snippets written in JavaScript, Python, and C.
-- Analyzing the complexity of the provided algorithms.
-- Presenting the complexity results in a clear and understandable format.
-- Providing a user-friendly CLI for interaction.
-- Delivering example codes and documentation for ease of use.
+#### 1.3 Intended Audience
 
-### 1.3 Definitions, Acronyms, and Abbreviations
+- **Software Developers**: Particularly those dealing with recursive functions and performance optimization.
+- **Students**: Learning about time complexity analysis and recursion.
+- **Researchers**: Evaluating the time complexity of JavaScript functions in academic or practical settings.
 
-- **CLI**: Command-Line Interface
-- **Big O**: An asymptotic notation that describes the upper limit of the runtime of an algorithm.
-- **Theta**: An asymptotic notation that describes a tight bound on the runtime of an algorithm.
-- **Omega**: An asymptotic notation that describes the lower limit of the runtime of an algorithm.
-- **SRS**: Software Requirements Specification
+#### 1.4 Definitions, Acronyms, and Abbreviations
 
-## 2. Overall Description
+- **tdq**: The command-line tool that initiates the analysis process.
+- **Big O Notation**: Used to describe the upper bound of an algorithm’s running time.
+- **Theta Notation**: Describes the tight bound of an algorithm’s running time.
+- **Omega Notation**: Describes the lower bound of an algorithm’s running time.
+- **Recursion**: A function calling itself to solve smaller instances of the problem.
 
-### 2.1 Product Perspective
+#### 1.5 References
 
-TideityIQ will be a standalone CLI tool that provides algorithm analysis capabilities. It will not rely on external libraries for algorithm complexity analysis but will implement the necessary algorithms and parsing mechanisms directly in C. The tool will be designed to be intuitive, allowing users to input their code easily and receive meaningful feedback on its complexity.
+- JavaScript language specification.
+- Big-O notation reference: https://bigocheatsheet.com.
 
-### 2.2 Product Functions
+### 2. Functional Requirements
 
-The main functions of the TideityIQ tool include:
+#### 2.1 User Requirements
 
-1. **Code Input**: Allow users to input code snippets in supported programming languages.
-2. **Code Parsing**: Analyze and parse the input code to identify algorithms and data structures.
-3. **Complexity Analysis**: Calculate the complexity (Big O, Theta, Omega) of the analyzed code.
-4. **Result Output**: Present the complexity results clearly, including a brief explanation of the results.
-5. **Examples and Documentation**: Provide example codes and detailed documentation for users.
+- The tool must analyze JavaScript files for recursive function patterns and detect loops.
+- The user must be able to run the tool via the command line by typing `tdq` followed by the JavaScript file path.
+- The tool must display a report with time complexity analysis, including:
+  - Nested Depth
+  - Recursive Calls
+  - Logarithmic Loops
+  - Big O, Theta, and Omega Complexity
+  - Detailed Explanation
 
-### 2.3 User Classes and Characteristics
+#### 2.2 Functional Requirements
 
-- **Students and Educators**: Users who are learning algorithms and want to understand the complexities of their implementations.
-- **Developers**: Software developers who need to analyze and optimize their code for better performance.
-- **Researchers**: Individuals who study algorithm performance and require tools for analysis.
+- **Command Line Interface (CLI)**: The tool should accept the following:
+  - **No argument**: Displays a welcome message and description.
+  - **JavaScript file as argument**: Analyzes the file and prints the time complexity analysis.
+- **Recursion Detection**: The tool should identify recursive functions and estimate their time complexity using Big O notation.
 
-### 2.4 Operating Environment
+- **Complexity Calculation**: The tool must calculate Big O, Theta, and Omega complexities for recursive calls and loops.
 
-TideityIQ will operate in a command-line environment, compatible with:
+- **Interactive Terminal Output**: The tool must use a typewriter effect to display text with a delay for an engaging user experience.
 
-- Windows (via Command Prompt or PowerShell)
-- macOS (via Terminal)
-- Linux (via Terminal)
+#### 2.3 System Features
 
-### 2.5 Design and Implementation Constraints
+- **File Analysis**: The system must parse the JavaScript file and detect recursive functions.
+- **Display of Analysis**: After analyzing the file, the system must display a report with the detected time complexity and a detailed explanation.
+- **Script Execution**: If no arguments are passed, the tool will execute a script (`bash ./bin/tdq`) that provides introductory information.
+- **Error Handling**: If an unsupported file type is passed, the system will notify the user.
 
-- The tool will be implemented in the C programming language.
-- It will initially support three programming languages: JavaScript, Python, and C.
-- The project will not use external libraries for parsing or analysis, focusing instead on custom implementations.
+### 3. Non-Functional Requirements
 
-### 2.6 Assumptions and Dependencies
+#### 3.1 Performance Requirements
 
-- Users will have a basic understanding of algorithm complexity.
-- Users have the necessary runtime environment to compile and run C programs.
-- The tool's functionality may depend on the correctness and clarity of the provided code snippets.
+- The tool must process JavaScript files efficiently, even for relatively large codebases.
+- The complexity analysis must be accurate and executed within reasonable time limits, typically under 10 seconds for small files.
 
-## 3. Specific Requirements
+#### 3.2 Usability
 
-### 3.1 Functional Requirements
+- The tool should be easy to use, with clear messages guiding the user through each step.
+- It should provide helpful error messages if a file is unsupported or if there are issues with the input.
 
-#### 3.1.1 Code Input
+#### 3.3 Reliability
 
-- The system shall accept code snippets through the command line.
-- The user shall specify the programming language of the input code.
+- The tool should handle a variety of JavaScript code structures, including simple and complex recursive functions.
+- The system should produce consistent and accurate results when the same file is analyzed multiple times.
 
-#### 3.1.2 Code Parsing
+### 4. System Design
 
-- The system shall correctly identify and parse functions, loops, and conditional statements in the provided code.
-- The system shall support syntax highlighting for better readability.
+#### 4.1 Architecture
 
-#### 3.1.3 Complexity Analysis
+The system consists of the following components:
 
-- The system shall calculate the complexity of the provided code and output the following:
-  - Big O notation
-  - Theta notation
-  - Omega notation
+1. **Main Program**: Analyzes the JavaScript file, detects recursion, and calculates time complexities.
+2. **Script for Intro**: Displays a welcome message and instructions when no file is provided.
+3. **Analysis Module**: Contains logic for detecting recursion and calculating time complexity.
+4. **Output Formatting**: Displays results in an engaging, readable format using a typewriter effect.
 
-#### 3.1.4 Result Output
+#### 4.2 Dependencies
 
-- The system shall display the calculated complexities along with a brief explanation for each notation.
-- The output format shall be user-friendly and easy to understand.
-
-#### 3.1.5 Examples and Documentation
-
-- The system shall include example code snippets demonstrating various algorithms.
-- The documentation shall explain how to use the tool, input formats, and example outputs.
-
-### 3.2 Non-Functional Requirements
-
-#### 3.2.1 Performance
-
-- The tool shall analyze code snippets and produce results within a reasonable time frame (less than 5 seconds for code snippets of average length).
-
-#### 3.2.2 Usability
-
-- The CLI interface shall be intuitive, with clear instructions and feedback.
-- Error messages shall be informative and guide the user to correct input issues.
-
-#### 3.2.3 Reliability
-
-- The tool shall be robust and handle various edge cases without crashing.
-- The parser shall correctly identify and manage common programming errors in the input code.
-
-#### 3.2.4 Portability
-
-- The application shall compile and run on different operating systems (Windows, macOS, and Linux).
-
-#### 3.2.5 Maintainability
-
-- The code shall be well-structured, documented, and modular to facilitate future enhancements and maintenance.
-
-## 4. Use Cases
-
-### 4.1 Use Case: Analyze Code Complexity
-
-**Actor**: User (Student/Developer)
-
-**Precondition**: The user has installed the TideityIQ tool and has access to a command-line interface.
-
-**Main Flow**:
-
-1. The user runs the TideityIQ tool from the command line.
-2. The user inputs a code snippet and specifies the programming language.
-3. The system parses the code and analyzes its complexity.
-4. The system outputs the complexities in Big O, Theta, and Omega notations with explanations.
-
-**Postcondition**: The user receives the analysis results and can use the information to improve their code.
-
-### 4.2 Use Case: Provide Example Code
-
-**Actor**: User
-
-**Precondition**: The user is interacting with the TideityIQ tool.
-
-**Main Flow**:
-
-1. The user requests example code snippets.
-2. The system displays a selection of example algorithms and their complexities.
-
-**Postcondition**: The user can reference example code to understand algorithmic complexity better.
-
-## 5. External Interface Requirements
-
-### 5.1 User Interfaces
-
-- The CLI shall be the primary user interface for the TideityIQ tool.
-- The interface shall support input prompts and output displays.
-
-### 5.2 Hardware Interfaces
-
-- The tool shall run on any machine with a C compiler and a command-line interface.
-
-### 5.3 Software Interfaces
-
-- The tool shall interface with the operating system to handle file input/output and execute commands.
-
-## 6. Future Considerations
-
-Future versions of TideityIQ may expand support to include additional programming languages, integrate advanced features like graphical representations of complexity, or provide more extensive user guidance through interactive tutorials.
+- **GCC** (GNU Compiler Collection) for compiling C source code.
+- **Make** for automating the build process.
+- **Bash** for running the interactive script and displaying outputs.
